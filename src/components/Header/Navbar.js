@@ -8,9 +8,9 @@ const Navbar = () => {
         <nav className="navbar">
             <Container>
                 <div className="navbar-start">
-                    <a className="logo">
-                        <img  src={images.logo} />
-                    </a>
+                    <Link to="/" className="logo">
+                        <img  src={images.logo} alt="logo"/>
+                    </Link>
                 </div>
                 <div className="navbar-middle">
                     <div className="nav-links">
@@ -23,10 +23,10 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="navbar-end">
-                    <a>
+                    <Link to="login" className="nav-link">
                         Login
-                    </a>
-                    <Link to="/dashboard">
+                    </Link>
+                    <Link to="/dashboard" className="nav-link">
                         Dashboard
                     </Link>
                 </div>
