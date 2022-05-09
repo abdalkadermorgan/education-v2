@@ -1,0 +1,32 @@
+.navbar-start {
+    justify-content: flex-start !important;
+    align-items: center;
+    
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    img {
+        height: 50px;
+        width: auto;
+    }
+}
+
+.navbar-middle {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center !important;
+    > .nav-link {
+        display: flex;
+        color: $primary;
+        cursor: pointer;
+        align-items: center;
+        padding: 0.5rem 0.7rem;
+        font-size: 0.9rem;
+    }
+}

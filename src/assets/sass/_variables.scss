@@ -1,0 +1,74 @@
+/*
+ * Step Design Framework
+ * Copyright 2022 Step Team
+ * Variables
+ */
+
+// Theme Colors
+
+$primary: #009ef7;
+$secondary: #9da8b1;
+$success: #50cd89;
+$info: #7239ea;
+$warning: #ffc700;
+$danger: #f1416c;
+$light: #f5f8ff;
+$dark: #181c32;
+
+$body-bg: #fff;
+$body-color: #000;
+$text-color: #9da8b1;
+$border-color: #dfe1e8;
+
+// Theme Font
+
+$fontLink: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap";
+$RTLFontLink: "https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap";
+
+//
+// Customize Bootstrap
+// --------------------------------------------------
+
+// Colors Contrast Ratio
+
+$min-contrast-ratio: 1.45;
+
+// Focus Shadow
+
+$input-btn-focus-box-shadow: none !important;
+$form-select-focus-box-shadow: none !important;
+
+// Border Radius
+
+$border-radius: 0.475rem;
+$border-radius-sm: 0.4rem;
+$border-radius-lg: 0.525rem;
+$border-radius-pill: 50rem;
+
+$badge-border-radius: 0.25rem;
+
+// Colors
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+);
+
+// Container Width
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1200px,
+) !default;
+
+// Placeholder Color
+
+$input-placeholder-color: $text-color;

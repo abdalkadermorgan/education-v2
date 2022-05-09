@@ -1,0 +1,70 @@
+.card {
+    border: none;
+    transition: .3s;
+    .card-img {
+        height: 250px;
+        width: auto;
+        overflow: hidden;
+        transition: transform .5s ease;
+        .card-img-top {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border: 1px solid $border-color;
+            transition: transform 0.5s ease;
+        }
+    }
+}
+
+.cart-catigory {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 0.8rem;
+    color: $white;
+    background-color: $warning;
+    border-radius:5px;
+    padding: 4px;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.prices {
+    .discount {
+        color: $text-color;
+        font-size: 1rem;
+        text-decoration: line-through;
+        font-weight: 700;
+    }
+    .price {
+        color: $success;
+        font-size: 1.2rem;
+    font-weight: 900;
+    }
+}
+
+.btn-card {
+    visibility: hidden;
+    opacity: 0;
+    margin-top: 7px;
+    text-align: center;
+    width: 100%;
+    transition: .5s;
+}
+
+.card:hover {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    .card-img-top {
+        border: none;
+        transition: transform 0.5s ease;
+        transform: scale(1.2);
+    }
+    .btn-card{
+        visibility: visible;
+        opacity: 1;
+        transition: .3s;
+    }
+}
