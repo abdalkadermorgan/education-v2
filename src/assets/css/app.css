@@ -11120,6 +11120,30 @@ textarea.form-control-lg {
   padding: 2rem 0;
 }
 
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.section-title > a {
+  color: #3e6787;
+  transition: 0.3s;
+  text-decoration: none;
+}
+.section-title > a:hover {
+  color: #b48b8b;
+}
+
+.gradient-bg {
+  background-image: linear-gradient(to right, #3e6787, #696d91, #8b7491, #a57d8e, #b48b8b);
+  background-size: 200%;
+  transition: background 1s ease-out;
+}
+.gradient-bg:hover {
+  background-position: 195px;
+}
+
 .swiper .swiper-wrapper .swiper-slide img {
   width: 100%;
   height: 60vh;
@@ -11166,6 +11190,14 @@ textarea.form-control-lg {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+.navbar-end .login {
+  border: 1px solid #9da8b1;
+  border-radius: 10px;
+}
+.navbar-end .login:hover {
+  color: #fff;
+  background-color: #3e6787;
 }
 
 .card {
@@ -11235,4 +11267,60 @@ textarea.form-control-lg {
   visibility: visible;
   opacity: 1;
   transition: 0.3s;
+}
+
+.counter-icon {
+  float: left;
+  width: 60px;
+  height: 45px;
+  line-height: 40px;
+  text-align: center;
+  margin-right: 15px;
+  border-right: 1px solid #dfe1e8;
+}
+.counter-icon svg {
+  width: 38px;
+  height: 38px;
+  color: #3e6787;
+}
+
+.counter-number {
+  display: inline-block;
+  overflow: hidden;
+}
+.counter-number .counter-count, .counter-number span {
+  font-size: 30px;
+  color: #9da8b1;
+  line-height: 0.9;
+}
+.counter-number p {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.subs-form {
+  position: relative;
+  max-width: 600px;
+  margin: auto;
+}
+.subs-form input {
+  width: 100%;
+  height: 60px;
+  background-color: #dfe1e8;
+  padding: 0 20px;
+  border-radius: 5px;
+  border: none;
+}
+.subs-form .nws-button button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 60px;
+  width: 195px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
 }

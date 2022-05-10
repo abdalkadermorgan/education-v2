@@ -4,7 +4,6 @@ import { images } from "../../assets/images";
 
 const CourseItem = () => {
     return (
-        <div className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3">
             <Card >
                 <div className="card-img">
                     <Card.Img variant="top" src={images.courseProgrammer} />
@@ -19,7 +18,6 @@ const CourseItem = () => {
                     <Button className="btn-card" variant="danger">Add To cart</Button>
                 </Card.Body>
             </Card>
-        </div>
     )
 }
 

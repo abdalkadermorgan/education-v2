@@ -1,0 +1,23 @@
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    >a {
+        color: $primary;
+        transition: .3s;
+        text-decoration: none;
+        &:hover {
+            color: $secondary;
+        }
+    }
+}
+
+.gradient-bg {
+    background-image: linear-gradient(to right, #3e6787, #696d91, #8b7491, #a57d8e, #b48b8b);
+    background-size: 200%;
+    transition: background 1s ease-out;
+    &:hover {
+        background-position: 195px;
+    }
+}

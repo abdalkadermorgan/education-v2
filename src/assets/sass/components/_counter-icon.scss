@@ -1,0 +1,28 @@
+.counter-icon {
+    float: left;
+    width: 60px;
+    height: 45px;
+    line-height: 40px;
+    text-align: center;
+    margin-right: 15px;
+    border-right: 1px solid $border-color;
+    svg {
+        width: 38px;
+        height: 38px;
+        color: $primary;
+    }
+}
+
+.counter-number {
+    display: inline-block;
+    overflow: hidden;
+    .counter-count, span {
+        font-size: 30px;
+        color: $text-color;
+        line-height: .9;
+    }
+    p{
+        font-size: 14px;
+        font-weight: 700;
+    }
+}

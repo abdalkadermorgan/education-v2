@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import '../../assets/css/app.css'
+import '../../assets/css/app.css';
 import { images } from "../../assets/images";
 
 const Navbar = () => {
@@ -23,12 +24,14 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="navbar-end">
-                    <Link to="login" className="nav-link">
-                        Login
-                    </Link>
-                    <Link to="/dashboard" className="nav-link">
-                        Dashboard
-                    </Link>
+                    <div className="nav-links">
+                        <Link to="login" className="nav-link login">
+                            Login
+                        </Link>
+                        <Link to="/dashboard" className="nav-link dashboard">
+                            Dashboard
+                        </Link>
+                    </div>
                 </div>
             </Container>
         </nav>
