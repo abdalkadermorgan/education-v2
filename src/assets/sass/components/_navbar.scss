@@ -1,3 +1,7 @@
+.navbar {
+    z-index: 100;
+    background-color: $body-bg;
+}
 .navbar-start {
     justify-content: flex-start !important;
     align-items: center;

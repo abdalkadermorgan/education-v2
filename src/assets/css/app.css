@@ -4567,7 +4567,7 @@ textarea.form-control-lg {
   width: 100%;
   padding: 1rem 1.25rem;
   font-size: 1rem;
-  color: #000;
+  color: #8a9299;
   text-align: left;
   background-color: #fff;
   border: 0;
@@ -4595,7 +4595,7 @@ textarea.form-control-lg {
   height: 1.25rem;
   margin-left: auto;
   content: "";
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%238a9299'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-size: 1.25rem;
   transition: transform 0.2s ease-in-out;
@@ -11120,6 +11120,11 @@ textarea.form-control-lg {
   padding: 2rem 0;
 }
 
+ul {
+  padding: 0;
+  margin: 0;
+}
+
 .section-title {
   display: flex;
   justify-content: space-between;
@@ -11144,10 +11149,119 @@ textarea.form-control-lg {
   background-position: 195px;
 }
 
+.sidebar {
+  background-color: #39444d !important;
+  height: 100%;
+  width: 300px;
+  padding-top: 66px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.sidebar .accordion .accordion-item {
+  border-radius: 0;
+  background-color: #39444d !important;
+  border: none;
+}
+.sidebar .accordion .accordion-item .accordion-button {
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 15px;
+}
+.sidebar .accordion .accordion-item .accordion-button svg {
+  margin-right: 10px;
+}
+.sidebar .accordion .accordion-item .accordion-button:not(.collapsed) {
+  color: #fff;
+  background: none;
+  box-shadow: none;
+}
+.sidebar .accordion .accordion-item .accordion-body {
+  padding: 0;
+}
+
+.sidebar-heading {
+  background-color: #39444d !important;
+  margin-bottom: 0.5rem !important;
+  color: #dfe2e6;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.sidebar-p-y {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+}
+
+.sidebar-menu-item {
+  position: relative;
+  overflow: hidden;
+  padding: 0 1.25rem;
+}
+.sidebar-menu-item .sidebar-menu-button .active {
+  background: rgba(38, 45, 51, 0.5);
+  color: #cfdbe6;
+  font-weight: 400;
+}
+
+.sidebar-menu-button {
+  padding-left: 36px;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  line-height: 42px;
+  font-size: 15px;
+  color: #8a9299;
+  text-decoration: none;
+  cursor: pointer;
+}
+.sidebar-menu-button svg {
+  margin-right: 5px;
+}
+.sidebar-menu-button:hover {
+  color: #fff;
+}
+
+.accordion-button {
+  color: #8a9299;
+}
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 fill=%27%23ffffff%27%3e%3cpath fill-rule=%27evenodd%27 d=%27M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z%27/%3e%3c/svg%3e");
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 fill=%27%23fffffa%27%3e%3cpath fill-rule=%27evenodd%27 d=%27M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z%27/%3e%3c/svg%3e");
+}
+
+.sidebar .accordion .accordion-item .accordion-button:not(.collapsed), .accordion-collapse {
+  transition: 0.2s;
+}
+
+.sidebar .accordion .accordion-item .accordion-button:not(.collapsed), .accordion-collapse.show {
+  background-color: rgba(38, 45, 51, 0.5);
+  transition: 0.2s;
+}
+
 .swiper .swiper-wrapper .swiper-slide img {
   width: 100%;
   height: 60vh;
   object-fit: cover;
+}
+
+.navbar {
+  z-index: 100;
+  background-color: #fff;
 }
 
 .navbar-start {
@@ -11323,4 +11437,18 @@ textarea.form-control-lg {
   color: #fff;
   font-size: 15px;
   font-weight: 700;
+}
+
+.dashboard-content {
+  margin-left: 300px;
+  padding: 2rem;
+}
+
+.table > :not(:first-child) {
+  border-top: 1px solid #dfe1e8;
+}
+
+.table > thead {
+  background: #3e6787;
+  color: #fff;
 }
