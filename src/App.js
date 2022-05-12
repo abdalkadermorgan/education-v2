@@ -1,4 +1,3 @@
-import { Row } from 'react-bootstrap';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './assets/css/app.css';
 import Navbar from './components/Header/Navbar';
@@ -11,7 +10,6 @@ import HomePage from './pages/Home';
 function App() {
   return (
     <BrowserRouter>
-    <>
       <Navbar />
       <Routes>
         <Route
@@ -19,7 +17,7 @@ function App() {
         element={<HomePage />}
         />
         <Route
-        path='/dashboard'
+        path='dashboard'
         element={<DashboardApp />}
         />
         <Route
@@ -28,16 +26,17 @@ function App() {
         />
         
       </Routes>
-    </>
-    <>
-      <Sidebar />
       <Routes>
       <Route
-          path='/dashbord/courses'
-          element={<CourseDataTable />}
+          path='dashboard/courses'
+          element={
+            <>
+            <Sidebar />
+            <CourseDataTable />
+            </>
+        }
           />
       </Routes>
-    </>
     </BrowserRouter>
   );
 }

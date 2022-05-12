@@ -24,7 +24,7 @@ const Sidebar = () => {
                                 <Accordion.Body>
                                     <ul className="sidebar-menu">
                                         <li className="sidebar-menu-item">
-                                            <Link to="/dashbord/courses" className="sidebar-menu-button">
+                                            <Link to="/dashboard/courses" className="sidebar-menu-button">
                                                 Courses
                                             </Link>
                                         </li>
