@@ -1,0 +1,30 @@
+.login-form {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 100px;
+    img {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+    h2 {
+        text-align: center;
+        font-size: 36px;
+        font-weight: 700;
+    }
+    
+    button[type="submit"] {
+        margin-top: 10px;
+        border: none;
+        background-color: $primary;
+        width: 100%;
+        border-radius: 4px;
+        height: 35px;
+        transition: 0.3s;
+        &:hover {
+            background-color: #254d6c;
+            transition: 0.3s;
+        }
+    }
+}

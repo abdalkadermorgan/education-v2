@@ -1,13 +1,13 @@
 import { Table } from "react-bootstrap";
 import CourseDeleteModal from "../../../modals/CourseDeleteModal";
-import CourseEditModal from "../../../modals/CourseEditModal";
-import CoursesAddModal from "../../../modals/CoursesAddModal";
+import SlideAddModal from "../../../modals/SlideAddModal";
+import SlideEditModal from "../../../modals/SlideEditModal";
 
-const CourseDataTable = () => {
+const SlideDataTable = () => {
 	return (
 		<div className="dashboard-content">
             <div className="d-flex mb-3 justify-content-end">
-				<CoursesAddModal />
+				<SlideAddModal />
 			</div>
 			<Table responsive hover>
 				<thead>
@@ -15,10 +15,8 @@ const CourseDataTable = () => {
 						<th>#</th>
 						<th>Image</th>
 						<th>Title</th>
-						<th>Catigory</th>
-						<th>Price</th>
-						<th>Discounts</th>
-						<th>Actions</th>
+						<th>Action</th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -33,11 +31,8 @@ const CourseDataTable = () => {
 							/>
 						</td>
 						<td>Title</td>
-						<td>Catigory</td>
-						<td>Price</td>
-						<td>Discounts</td>
 						<td>
-                        <CourseEditModal />
+                        <SlideEditModal />
                         <CourseDeleteModal />
 						</td>
 					</tr>
@@ -48,4 +43,4 @@ const CourseDataTable = () => {
 	);
 };
 
-export default CourseDataTable;
+export default SlideDataTable;

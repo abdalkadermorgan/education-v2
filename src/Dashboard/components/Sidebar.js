@@ -44,9 +44,9 @@ const Sidebar = () => {
                                 <Accordion.Body>
                                     <ul className="sidebar-menu">
                                         <li className="sidebar-menu-item">
-                                            <a className="sidebar-menu-button">
+                                            <Link to="/dashboard/slide" className="sidebar-menu-button">
                                                 Slider
-                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </Accordion.Body>
@@ -64,9 +64,9 @@ const Sidebar = () => {
                                 <Accordion.Body>
                                     <ul className="sidebar-menu">
                                         <li className="sidebar-menu-item">
-                                            <a className="sidebar-menu-button">
+                                            <Link to="/dashboard/Infographic" className="sidebar-menu-button">
                                                 Info Graphic
-                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </Accordion.Body>
