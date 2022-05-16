@@ -1,59 +1,97 @@
+import { useState } from "react";
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
-import { render } from '@testing-library/react';
+import { useDispatch, useSelector } from "react-redux";
 
-const FourmCourse = () => (
-  <div>
-    <Formik
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        email: '',
-      }}
-      onSubmit={async (values) => {
-        await new Promise((r) => setTimeout(r, 500));
-        alert(JSON.stringify(values, null, 2));
-      }}
-    >
-      <Form>
-        <Field id="courseTitle" name="cTitle" placeholder="Title" />
+const FormCourse = (props) => {
 
-        <Field id="category" name="category" placeholder="Category" />
+  
+  return (
+    <div>
+      <Formik
+        initialValues={{
+          firstName: '',
+          lastName: '',
+          email: '',
+        }}
+        onSubmit={async (values) => {
+          await new Promise((r) => setTimeout(r, 500));
+          alert(JSON.stringify(values, null, 2));
+        }}
+      >
+        <Form onSubmit={
+        (a) => {
+          console.log(a);
+          props.getData(a);
+        }}>
+          <Field 
+          id="courseTitle" 
+          name="cTitle" 
+          placeholder="Title" 
+          // onChange={(e) => setState((s) => ({ ...s, title: e.target.value }))}
+					// 	value={state.title}
+          />
 
-        <Field
-          id="price"
-          name="price"
-          placeholder="Price"
-          type="number"
-        />
+          <Field 
+          id="category" 
+          name="category" 
+          placeholder="Category" 
+          // onChange={(e) =>
+          //   setState((s) => ({ ...s, catigory: e.target.value }))
+          // }
+          // value={state.catigory}
+          />
 
-        <Field
-          id="discount"
-          name="discount"
-          placeholder="Discount"
-          type="number"
-        />
+          <Field
+            id="price"
+            name="price"
+            placeholder="Price"
+            type="number"
+            // onChange={(e) => setState((s) => ({ ...s, price: parseInt(e.target.value) }))}
+						// value={state.price}
+          />
 
-        <Field
-          as="textarea"
-          id="discrption"
-          name="discrption"
-          placeholder="Discription"
-          type="number"
-          
-        />
+          <Field
+            id="discount"
+            name="discount"
+            placeholder="Discount"
+            type="number"
+            // onChange={(e) =>
+						// 	setState((s) => ({ ...s, discount: e.target.value }))
+						// }
+						// value={state.discount}
+          />
 
-        <Field
-          id="img"
-          name="img"
-          placeholder="URL Image"
-          type="text"
-        />
-      </Form>
-    </Formik>
-  </div>
-);
+          <Field
+            as="textarea"
+            id="discrption"
+            name="discrption"
+            placeholder="Discription"
+            type="number"
+            // onChange={(e) =>
+						// 	setState((s) => ({ ...s, description: e.target.value }))
+						// }
+						// value={state.description}
 
-// render(<FourmCourse />);
+          />
 
-export default FourmCourse;
+          <Field
+            id="img"
+            name="img"
+            placeholder="URL Image"
+            type="text"
+            // onChange={(e) =>
+						// 	setState((s) => ({ ...s, urlImg: e.target.value }))
+						// }
+						// value={state.urlImg}
+          />
+        </Form>
+      </Formik>
+    </div>
+
+  )
+}
+
+
+
+export default FormCourse;

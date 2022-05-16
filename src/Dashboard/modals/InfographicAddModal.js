@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import FormInfographic from '../Forms/FormInfographic';
@@ -35,6 +34,5 @@ function InfographicAddModal() {
     );
   }
   
-  render(<InfographicAddModal />);
 
   export default InfographicAddModal;

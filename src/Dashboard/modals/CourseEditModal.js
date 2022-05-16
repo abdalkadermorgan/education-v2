@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import FourmCourse from '../Forms/FormCourse';
@@ -35,6 +34,4 @@ function CourseEditModal() {
     );
   }
   
-  render(<CourseEditModal />);
-
   export default CourseEditModal;

@@ -27,6 +27,5 @@ const FourmCourse = () => (
   </div>
 );
 
-// render(<FourmCourse />);
 
 export default FourmCourse;

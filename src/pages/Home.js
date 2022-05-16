@@ -12,6 +12,7 @@ import { UilBook } from '@iconscout/react-unicons';
 import { UilFavorite } from '@iconscout/react-unicons';
 import { UilUsersAlt } from '@iconscout/react-unicons';
 const HomePage = () => {
+
     return (
         <div>
             <Swiper

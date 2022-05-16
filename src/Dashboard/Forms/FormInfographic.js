@@ -46,6 +46,5 @@ const FormInfographic = () => (
   </div>
 );
 
-// render(<FormInfographic />);
 
 export default FormInfographic;

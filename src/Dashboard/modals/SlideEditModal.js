@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import FormSlide from '../Forms/FormSlide';
@@ -35,6 +34,5 @@ function SlideEditModal() {
     );
   }
   
-  render(<SlideEditModal />);
 
   export default SlideEditModal;
