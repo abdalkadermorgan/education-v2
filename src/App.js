@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import { Provider } from 'react-redux';
 import { reducer } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";

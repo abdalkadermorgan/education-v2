@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../../store/store';
-import FormSlide from '../Forms/FormSlide';
 
 function SlideAddModal() {
   const [show, setShow] = useState(false);

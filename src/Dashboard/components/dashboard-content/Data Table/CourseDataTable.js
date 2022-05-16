@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { Button, Modal, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import CourseDeleteModal from "../../../modals/CourseDeleteModal";
-import CourseEditModal from "../../../modals/CourseEditModal";
 import CoursesAddModal from "../../../modals/CoursesAddModal";
 import { Actions } from "../../../../store/store";
 
