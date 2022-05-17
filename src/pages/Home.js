@@ -11,7 +11,9 @@ import { UilGraduationCap } from '@iconscout/react-unicons';
 import { UilBook } from '@iconscout/react-unicons';
 import { UilFavorite } from '@iconscout/react-unicons';
 import { UilUsersAlt } from '@iconscout/react-unicons';
+import { useSelector } from 'react-redux';
 const HomePage = () => {
+    const { sliders, infographics } = useSelector((state) => state);
 
     return (
         <div>
@@ -23,12 +25,13 @@ const HomePage = () => {
             //   onSlideChange={() => console.log('slide change')}
             //   onSwiper={(swiper) => console.log(swiper)}
             >
-                <SwiperSlide className='swiper-slide'>
-                    <img src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGNvdXJzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60' alt='' />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGNvdXJzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60' alt='' />
-                </SwiperSlide>
+                {sliders.map((slide, index) => (
+                    <SwiperSlide className='swiper-slide' key={`slider-home-${index}`}>
+                        <img src={slide.urlImg}
+                         alt='' />
+                    </SwiperSlide>
+
+                ))}
             </Swiper>
 
             <section className='page-section'>
@@ -40,71 +43,63 @@ const HomePage = () => {
                             <UilArrowRight />
                         </Link>
                     </div>
-                    <Swiper
-                        modules={[Pagination]}
-                        spaceBetween={20}
-                        slidesPerView={4}
-                        pagination={{ clickable: true }}
-                    >
-                        <SwiperSlide className='swiper-slide'>
+                    
                             <CourseItem />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <CourseItem />
-                        </SwiperSlide>
-                    </Swiper>
                 </Container>
             </section>
 
             <section className='page-section'>
                 <Container>
                     <div className='search-counter-up'>
-                        <Row>
-                            <div className='col-md-3 col-sm-6'>
-                                <div className='counter-icon-number'>
-                                    <div className='counter-icon'>
-                                        <UilGraduationCap />
+                        {infographics.map((info, index) => (
+                                <Row  key={`infographic-homne-${index}`}>
+                                    <div className='col-md-3 col-sm-6'>
+                                        <div className='counter-icon-number'>
+                                            <div className='counter-icon'>
+                                                <UilGraduationCap />
+                                            </div>
+                                            <div className='counter-number'>
+                                                <span className='counter-count'>{info.students}</span>
+                                                <p>Students Enrolled</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className='counter-number'>
-                                        <span className='counter-count'>5M+</span>
-                                        <p>Students Enrolled</p>
+                                    <div className='col-md-3 col-sm-6'>
+                                        <div className='counter-icon-number'>
+                                            <div className='counter-icon'>
+                                                <UilBook />
+                                            </div>
+                                            <div className='counter-number'>
+                                                <span className='counter-count'>{info.available}</span>
+                                                <p>Online Available Courses</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className='col-md-3 col-sm-6'>
-                                <div className='counter-icon-number'>
-                                    <div className='counter-icon'>
-                                        <UilBook />
+                                    <div className='col-md-3 col-sm-6'>
+                                        <div className='counter-icon-number'>
+                                            <div className='counter-icon'>
+                                                <UilFavorite />
+                                            </div>
+                                            <div className='counter-number'>
+                                                <span className='counter-count'>{info.products}</span>
+                                                <p>Premium Quality Products</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className='counter-number'>
-                                        <span className='counter-count'>122.500+</span>
-                                        <p>Online Available Courses</p>
+                                    <div className='col-md-3 col-sm-6'>
+                                        <div className='counter-icon-number'>
+                                            <div className='counter-icon'>
+                                                <UilUsersAlt />
+                                            </div>
+                                            <div className='counter-number'>
+                                                <span className='counter-count'>{info.teachers}</span>
+                                                <p>Teachers Registered</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className='col-md-3 col-sm-6'>
-                                <div className='counter-icon-number'>
-                                    <div className='counter-icon'>
-                                        <UilFavorite />
-                                    </div>
-                                    <div className='counter-number'>
-                                        <span className='counter-count'>15.000+</span>
-                                        <p>Premium Quality Products</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='col-md-3 col-sm-6'>
-                                <div className='counter-icon-number'>
-                                    <div className='counter-icon'>
-                                        <UilUsersAlt />
-                                    </div>
-                                    <div className='counter-number'>
-                                        <span className='counter-count'>7.500+</span>
-                                        <p>Teachers Registered</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Row>
+                                </Row>
+
+                        ))}
                     </div>
                 </Container>
             </section>

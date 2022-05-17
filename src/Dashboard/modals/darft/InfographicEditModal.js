@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import FormSlide from '../Forms/FormSlide';
+import FormInfographic from '../../Forms/FormInfographic';
 
-function SlideEditModal() {
+function InfographicEditModal() {
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
@@ -16,10 +16,10 @@ function SlideEditModal() {
   
         <Modal show={show} onHide={handleClose} animation={false}>
           <Modal.Header closeButton>
-            <Modal.Title>Edit Slide</Modal.Title>
+            <Modal.Title>Edit Info Graphic</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-              <FormSlide />
+              <FormInfographic />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
@@ -34,5 +34,4 @@ function SlideEditModal() {
     );
   }
   
-
-  export default SlideEditModal;
+  export default InfographicEditModal;

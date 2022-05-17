@@ -12,6 +12,7 @@ function SlideAddModal() {
   const handleShow = () => setShow(true);
 
   const [state, setState] = useState({
+    id:"",
     title: "",
     urlImg: "",
   });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import FourmCourse from '../Forms/FormCourse';
+import FourmCourse from '../../Forms/FormCourse';
 
 function CourseEditModal() {
     const [show, setShow] = useState(false);

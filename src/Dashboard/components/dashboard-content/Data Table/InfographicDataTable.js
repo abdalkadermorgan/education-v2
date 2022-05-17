@@ -4,8 +4,6 @@ import { Button, Modal, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "../../../../store/store";
 import InfographicAddModal from "../../../modals/InfographicAddModal";
-import InfographicDeleteModal from "../../../modals/InfographicDeleteModal";
-import InfographicEditModal from "../../../modals/InfographicEditModal";
 
 const InfographicDataTable = () => {
 	const [show, setShow] = useState(false);
