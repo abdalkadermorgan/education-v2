@@ -2,6 +2,7 @@ import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import '../../assets/css/app.css';
 import { images } from "../../assets/images";
+import { UilShoppingCartAlt } from '@iconscout/react-unicons';
 
 const Navbar = () => {
     return (
@@ -26,6 +27,10 @@ const Navbar = () => {
                     <div className="nav-links">
                         <Link to="/login" className="nav-link login">
                             Login
+                        </Link>
+                        <Link to="dashboard" className="nav-link shop">
+                            <span>3</span>
+                            <UilShoppingCartAlt />
                         </Link>
                         <Link to="dashboard" className="nav-link dashboard">
                             Dashboard
