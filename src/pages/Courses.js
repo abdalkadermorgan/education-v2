@@ -1,13 +1,13 @@
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import CourseItem from "../components/Course/CourseItem";
 
 const Courses = () => {
     return (
         <section className="page-section">
             <Container>
-                <div className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3">
-                <CourseItem />
-                </div>
+                <Row xs={1} md={2} xl={4} className="g-4">
+                    <CourseItem />
+                </Row>
             </Container>
         </section>
     )

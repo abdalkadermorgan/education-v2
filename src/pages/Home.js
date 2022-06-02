@@ -28,7 +28,7 @@ const HomePage = () => {
                 {sliders.map((slide, index) => (
                     <SwiperSlide className='swiper-slide' key={`slider-home-${index}`}>
                         <img src={slide.urlImg}
-                         alt='' />
+                            alt='' />
                     </SwiperSlide>
 
                 ))}
@@ -43,8 +43,9 @@ const HomePage = () => {
                             <UilArrowRight />
                         </Link>
                     </div>
-                    
-                            <CourseItem />
+                    <Row xs={1} md={2} xl={4} className="g-4">
+                        <CourseItem />
+                    </Row>
                 </Container>
             </section>
 
@@ -52,52 +53,52 @@ const HomePage = () => {
                 <Container>
                     <div className='search-counter-up'>
                         {infographics.map((info, index) => (
-                                <Row  key={`infographic-homne-${index}`}>
-                                    <div className='col-md-3 col-sm-6'>
-                                        <div className='counter-icon-number'>
-                                            <div className='counter-icon'>
-                                                <UilGraduationCap />
-                                            </div>
-                                            <div className='counter-number'>
-                                                <span className='counter-count'>{info.students}</span>
-                                                <p>Students Enrolled</p>
-                                            </div>
+                            <Row key={`infographic-homne-${index}`}>
+                                <div className='col-md-3 col-sm-6'>
+                                    <div className='counter-icon-number'>
+                                        <div className='counter-icon'>
+                                            <UilGraduationCap />
+                                        </div>
+                                        <div className='counter-number'>
+                                            <span className='counter-count'>{info.students}</span>
+                                            <p>Students Enrolled</p>
                                         </div>
                                     </div>
-                                    <div className='col-md-3 col-sm-6'>
-                                        <div className='counter-icon-number'>
-                                            <div className='counter-icon'>
-                                                <UilBook />
-                                            </div>
-                                            <div className='counter-number'>
-                                                <span className='counter-count'>{info.available}</span>
-                                                <p>Online Available Courses</p>
-                                            </div>
+                                </div>
+                                <div className='col-md-3 col-sm-6'>
+                                    <div className='counter-icon-number'>
+                                        <div className='counter-icon'>
+                                            <UilBook />
+                                        </div>
+                                        <div className='counter-number'>
+                                            <span className='counter-count'>{info.available}</span>
+                                            <p>Online Available Courses</p>
                                         </div>
                                     </div>
-                                    <div className='col-md-3 col-sm-6'>
-                                        <div className='counter-icon-number'>
-                                            <div className='counter-icon'>
-                                                <UilFavorite />
-                                            </div>
-                                            <div className='counter-number'>
-                                                <span className='counter-count'>{info.products}</span>
-                                                <p>Premium Quality Products</p>
-                                            </div>
+                                </div>
+                                <div className='col-md-3 col-sm-6'>
+                                    <div className='counter-icon-number'>
+                                        <div className='counter-icon'>
+                                            <UilFavorite />
+                                        </div>
+                                        <div className='counter-number'>
+                                            <span className='counter-count'>{info.products}</span>
+                                            <p>Premium Quality Products</p>
                                         </div>
                                     </div>
-                                    <div className='col-md-3 col-sm-6'>
-                                        <div className='counter-icon-number'>
-                                            <div className='counter-icon'>
-                                                <UilUsersAlt />
-                                            </div>
-                                            <div className='counter-number'>
-                                                <span className='counter-count'>{info.teachers}</span>
-                                                <p>Teachers Registered</p>
-                                            </div>
+                                </div>
+                                <div className='col-md-3 col-sm-6'>
+                                    <div className='counter-icon-number'>
+                                        <div className='counter-icon'>
+                                            <UilUsersAlt />
+                                        </div>
+                                        <div className='counter-number'>
+                                            <span className='counter-count'>{info.teachers}</span>
+                                            <p>Teachers Registered</p>
                                         </div>
                                     </div>
-                                </Row>
+                                </div>
+                            </Row>
 
                         ))}
                     </div>

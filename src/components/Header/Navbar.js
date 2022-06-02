@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import '../../assets/css/app.css';
 import { images } from "../../assets/images";
 import { UilShoppingCartAlt } from '@iconscout/react-unicons';
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+
+    const { cart } = useSelector((state) => state);
     return (
         <nav className="navbar">
             <Container>
@@ -28,11 +31,11 @@ const Navbar = () => {
                         <Link to="/login" className="nav-link login">
                             Login
                         </Link>
-                        <Link to="dashboard" className="nav-link shop">
-                            <span>3</span>
+                        <Link to="cartpage" className="nav-link shop">
+                            <span>{cart.length}</span>
                             <UilShoppingCartAlt />
                         </Link>
-                        <Link to="dashboard" className="nav-link dashboard">
+                        <Link to="/dashboard/courses" className="nav-link dashboard">
                             Dashboard
                         </Link>
                     </div>

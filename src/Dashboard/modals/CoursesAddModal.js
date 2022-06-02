@@ -12,7 +12,6 @@ function CoursesAddModal() {
   const handleShow = () => setShow(true);
 
   const [state, setState] = useState({
-    id:"",
     title: "",
     description: "",
     urlImg: "",

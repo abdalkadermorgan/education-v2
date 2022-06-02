@@ -14,12 +14,19 @@ import DashboardApp from './Dashboard/DashboardApp';
 import Courses from './pages/Courses';
 import HomePage from './pages/Home';
 import Login from './pages/Login';
+import logger from 'redux-logger'
+import CartPage from "./pages/CartPage";
+import SingleCourse from "./pages/SingleCourse";
 
 const store = configureStore({
   reducer: reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+
+  middleware: getDefaultMiddleware => [...getDefaultMiddleware({
     serializableCheck: false,
-  }),
+
+  }), logger],
+
+
 
 });
 const persistor = persistStore(store);
@@ -47,6 +54,16 @@ function App() {
             <Route
               path='/login'
               element={<Login />}
+            />
+
+            <Route
+              path='/cartpage'
+              element={<CartPage />}
+            />
+
+            <Route
+              path='course/:id'
+              element={<SingleCourse />}
             />
 
           </Routes>

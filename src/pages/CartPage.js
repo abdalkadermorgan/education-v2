@@ -1,6 +1,22 @@
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Actions } from "../store/store";
 
 const CartPage = () => {
+
+    const { cart } = useSelector((state) => state);
+
+    const totalAmount = () => {
+        return cart.reduce((total, item) => {
+           return  total + item.price
+        }, 0);
+    }
+
+    const dispatch = useDispatch();
+
+const onDeleteCart = (id) => {
+  dispatch(Actions.SetAddedCart(cart.filter((e) => e.id !== id)));
+};
 
     return (
         <section className="page-section">
@@ -10,35 +26,62 @@ const CartPage = () => {
                         <div className="shop-cart">
                             <h1>Shopping Cart</h1>
                             <h2>
-                                0 Item
+                                {cart.length} Item
                             </h2>
                         </div>
-                        <div className="shop-cart-table">
+                        <div className="title-details">
                             <div className="col-6">
-                                <div className="cart-details">
-                                    <div className="cart-img">
-                                        <img src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y29tcHV0ZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500" />
-                                    </div>
-                                    <div className="cart-name">
-                                        <span>name</span>
-                                        <span>catigory</span>
-                                    </div>
-                                </div>
+                                <h3>course details</h3>
                             </div>
                             <div className="col-3">
-                                <div className="cart-price">
-                                    <span>123 $</span>
-                                </div>
+                                <h3>PRICE</h3>
                             </div>
                             <div className="col-3">
-                                <div className="cart-action">
-                                    <Button>remove</Button>
-                                </div>
+                                <h3>ACTION</h3>
                             </div>
                         </div>
+                        {cart.map((carts, index) => 
+                            <div className="shop-cart-table"  key={`cartPage-${index}`}>
+                                <div className="col-6">
+                                    <div className="cart-details">
+                                        <div className="cart-img">
+                                            <img src={carts.urlImg} alt=""/>
+                                        </div>
+                                        <div className="cart-name">
+                                            <span className="name">{carts.title}</span>
+                                            <span className="catigory">{carts.catigory}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-3">
+                                    <div className="cart-price">
+                                        <span>{carts.price} $</span>
+                                    </div>
+                                </div>
+                                <div className="col-3">
+                                    <div className="cart-action">
+                                        <Button onClick={() => onDeleteCart(carts.id)}>remove</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        )}
+                    </div>
+                    <div className="col-lg-3">
+                    <div className="shop-cart">
+                        <h1>Order Summary</h1>
+                    </div>
+                    <div className="total-cost">
+                        <span>TOTAL cost</span>
+                        <span>{totalAmount()} $</span>
+                    </div>
+                    <div className="total-amount">
+                        <span>TOTAL AMOUNT</span>
+                        <span>{totalAmount()} $</span>
+                    </div>
+                    <button className="btn btn-success">Checkout</button>
                     </div>
                 </Row>
-
             </Container>
         </section>
     )
