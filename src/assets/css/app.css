@@ -11402,8 +11402,6 @@ a {
 }
 
 .btn-card {
-  visibility: hidden;
-  opacity: 0;
   margin-top: 7px;
   text-align: center;
   width: 100%;
@@ -11630,8 +11628,15 @@ button[type=submit] {
   margin-top: 20px;
 }
 .single-course-price span {
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: 600;
+  color: #f1416c;
+}
+.single-course-price span.discount {
+  color: #9da8b1;
+  font-size: 1.3rem;
+  text-decoration: line-through;
+  font-weight: 700;
 }
 
 .login-form {

@@ -17,14 +17,15 @@ const CourseItemForm = (props) => {
 			
 		} else {
 			dispatch(Actions.SetAddedCart([...cart, course]));
+			return setDisabled(true);
 		}
 	};
-    console.log("cart", cart);
 
 	return (
 		<Button
 			disabled={disabled}
-			className="btn btn-primary mt-3" variant="danger"
+			className="btn-card mt-3" 
+			variant="danger"
 			onClick={() => addCourseToCart(props.course)}
 			
 		>

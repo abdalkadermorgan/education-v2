@@ -1,28 +1,35 @@
 .single-course-img {
-    width: 100%;
-    height: 300px;
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+	width: 100%;
+	height: 300px;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 }
 
 .single-course-detalis {
-    margin-top: 20px;
-    h1 {
-        font-size: 1.6rem;
-        font-weight: 600;
-    }
-    p {
-        font-size: 0.9rem;
-    }
+	margin-top: 20px;
+	h1 {
+		font-size: 1.6rem;
+		font-weight: 600;
+	}
+	p {
+		font-size: 0.9rem;
+	}
 }
 
 .single-course-price {
-    margin-top: 20px;
-    span {
-        font-size: 1rem;
-        font-weight: 600;
-    }
+	margin-top: 20px;
+	span {
+		font-size: 1.4rem;
+		font-weight: 600;
+		color: $danger;
+	}
+	span.discount {
+		color: $text-color;
+		font-size: 1.3rem;
+		text-decoration: line-through;
+		font-weight: 700;
+	}
 }
