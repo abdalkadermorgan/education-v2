@@ -1,11 +1,14 @@
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import '../../assets/css/app.css';
 import { images } from "../../assets/images";
 import { UilShoppingCartAlt } from '@iconscout/react-unicons';
 import { useSelector } from "react-redux";
+import AuthContext from "../../store/auth-context";
+import { useContext } from "react";
 
 const Navbar = () => {
+    const ctx = useContext(AuthContext)
 
     const { cart } = useSelector((state) => state);
     return (
@@ -28,16 +31,24 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end">
                     <div className="nav-links">
-                        <Link to="/login" className="nav-link login">
-                            Login
-                        </Link>
+                        {!ctx.isLoggedIn && (
+                            <Link to="/login" className="nav-link login">
+                                Login
+                            </Link>
+                        )}
+
+                        {ctx.isLoggedIn && (
+                            <Button className="btn btn-primary" onClick={ctx.onLogout}>Logout</Button>
+                        )}
                         <Link to="cartpage" className="nav-link shop">
                             <span>{cart.length}</span>
                             <UilShoppingCartAlt />
                         </Link>
-                        <Link to="/dashboard/courses" className="nav-link dashboard">
-                            Dashboard
-                        </Link>
+                        {ctx.isLoggedIn && (
+                            <Link to="/dashboard/courses" className="nav-link dashboard">
+                                Dashboard
+                            </Link>
+                        )}
                     </div>
                 </div>
             </Container>

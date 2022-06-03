@@ -1,115 +1,114 @@
-import React, {
+import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
 
-} from "react";
 import { Field, Form, Formik } from "formik";
 import { images } from "../assets/images";
+import AuthContext from '../store/auth-context';
+import Input from '../components/UI/Input';
+
+const emailReducer = (state, action) => {
+    if (action.type === 'USER_INPUT') {
+        return { value: action.val, isValid: action.val.includes('@') };
+    }
+    if (action.type === 'INPUT_BLUR') {
+        return { value: state.value, isValid: state.value.includes('@') };
+    }
+
+    return { value: '', isValid: false };
+};
 
 
 
-// const emailReducer = (state, action) => {
-//     console.log(state,action);
-// 	if (action.type === "USER_INPUT") {
-// 		return { value: action.val, isValid: action.val.includes("@") };
-// 	}
-// 	if (action.type === "INPUT_BLUR") {
-// 		return { value: state.value, isValid: state.value.includes("@") };
-// 	}
+const passwordReducer = (state, action) => {
+    if (action.type === 'USER_INPUT') {
+        return { value: action.val, isValid: action.val.trim().length > 6 };
+    }
+    if (action.type === 'INPUT_BLUR') {
+        return { value: state.value, isValid: state.value.trim().length > 6 };
+    }
 
-// 	return { value: "", isValid: false };
-// };
+    return { value: '', isValid: false };
+};
 
-// const passwordReducer = (state, action) => {
-// 	if (action.type === "USER_INPUT") {
-// 		return { value: action.val, isValid: action.val.trim().length > 6 };
-// 	}
-// 	if (action.type === "INPUT_BLUR") {
-// 		return { value: state.value, isValid: state.value.trim().length > 6 };
-// 	}
 
-// 	return { value: "", isValid: false };
-// };
 
-const Login = React.forwardRef((props, ref) => {
-    // const inputRef = useRef();
+const Login = (props) => {
 
-    // const activate = () => {
-    //     inputRef.current.focus();
-    // };
+	const [formIsValid, setFormIsValid] = useState(false);
 
-    // useImperativeHandle(ref, () => {
-    //     return {
-    //         focus: activate,
-    //     };
-    // });
-	// const [formIsValid, setFormIsValid] = useState(false);
+    const [emailState, dispatchEmail] = useReducer(emailReducer, {
+        value: '',
+        isValid: null,
+    });
+    const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
+        value: '',
+        isValid: null,
+    });
 
-	// const [emailState, dispatchEmail] = useReducer(emailReducer, {
-	// 	value: "",
-	// 	isValid: null,
-	// });
-	// const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
-	// 	value: "",
-	// 	isValid: null,
-	// });
+    const authCtx = useContext(AuthContext);
 
-	// const authCtx = useContext(AuthContext);
+    const emailInputRef = useRef();
+    const passwordInputRef = useRef();
 
-	// const emailInputRef = useRef();
-	// const passwordInputRef = useRef();
+    useEffect(() => {
+        console.log('EFFECT RUNNING');
 
-	// useEffect(() => {
-	// 	console.log("EFFECT RUNNING");
+        const storedUserLogged = localStorage.getItem('isLoggedIn');
 
-	// 	const storedUserLogged = localStorage.getItem("isLoggedIn");
+        if (storedUserLogged === '1') {
+            window.location.pathname = "/";
+        }
 
-	// 	if (storedUserLogged === "1") {
-	// 		window.location.pathname = "/";
-	// 	}
 
-	// 	return () => {
-	// 		console.log("EFFECT CLEANUP");
-	// 	};
-	// }, []);
+        return () => {
+            console.log('EFFECT CLEANUP');
 
-	// const { isValid: emailIsValid } = emailState;
-	// const { isValid: passwordIsValid } = passwordState;
+        };
 
-	// useEffect(() => {
-	// 	const identifier = setTimeout(() => {
-	// 		console.log("checking");
-	// 		setFormIsValid(emailIsValid && passwordIsValid);
-	// 	}, 500);
-	// 	return () => {
-	// 		console.log("Cleanup");
-	// 		clearTimeout(identifier);
-	// 	};
-	// }, [emailIsValid, passwordIsValid]);
+    }, [])
 
-	// const emailChangeHandler = (event) => {
-	// 	dispatchEmail({ type: "USER_INPUT", val: event.target.value });
-	// };
-	// const passwordChangeHandler = (event) => {
-	// 	dispatchPassword({ type: "USER_INPUT", val: event.target.value });
-	// };
+    const { isValid: emailIsValid } = emailState;
+    const { isValid: passwordIsValid } = passwordState;
 
-	// const validateEmailHandler = () => {
-	// 	dispatchEmail({ type: "INPUT_BLUR" });
-	// };
+    useEffect(() => {
+        const identifier = setTimeout(() => {
+            console.log('checking')
+            setFormIsValid(emailIsValid && passwordIsValid);
+        }, 500);
+        return () => {
+            console.log('Cleanup');
+            clearTimeout(identifier);
+        };
+    }, [emailIsValid, passwordIsValid]);
 
-	// const validatePasswordHandler = () => {
-	// 	dispatchPassword({ type: "INPUT_BLUR" });
-	// };
+    const emailChangeHandler = (event) => {
+        dispatchEmail({ type: 'USER_INPUT', val: event.target.value });
+    };
+    const passwordChangeHandler = (event) => {
+        dispatchPassword({ type: 'USER_INPUT', val: event.target.value });
+    };
 
-	// const submitHandler = (event) => {
-	// 	event.preventDefault();
-	// 	if (formIsValid) {
-	// 		authCtx.onLogin(emailState.value, passwordState.value);
-	// 	} else if (!emailIsValid) {
-	// 		emailInputRef.current.focus();
-	// 	} else {
-	// 		passwordInputRef.current.focus();
-	// 	}
-	// };
+    const validateEmailHandler = () => {
+        dispatchEmail({ type: 'INPUT_BLUR' });
+    };
+
+
+    const validatePasswordHandler = () => {
+        dispatchPassword({ type: 'INPUT_BLUR' });
+    }
+
+    const submitHandler = (event) => {
+
+
+        event.preventDefault();
+        if (formIsValid) {
+            authCtx.onLogin(emailState.value, passwordState.value);
+        } else if (!emailIsValid) {
+            emailInputRef.current.focus();
+        } else {
+            passwordInputRef.current.focus();
+        }
+    };
+
 	return (
 		<div className="login-form">
 			<img src={images.logo} alt="Logo" />
@@ -125,33 +124,33 @@ const Login = React.forwardRef((props, ref) => {
 				}}
 			>
 				<Form 
-                // onSubmit={submitHandler}
+                onSubmit={submitHandler}
                 >
-					<Field
-						// ref={props.emailInputRef}
+					<Input
+						ref={emailInputRef}
 						id="email"
 						name="email"
 						placeholder="Enter Your Email"
 						type="email"
-						// value={emailState.value}
-						// isValid={emailIsValid}
-						// onChange={emailChangeHandler}
-						// onBlur={validateEmailHandler}
+						value={emailState.value}
+						isValid={emailIsValid}
+						onChange={emailChangeHandler}
+						onBlur={validateEmailHandler}
 					/>
 
-					<Field
-						// ref={props.emailInputRef}
+					<Input
+						ref={passwordInputRef}
 						id="password"
 						name="password"
 						placeholder="Enter Your Password"
 						type="password"
-						// value={passwordState.value}
-						// isValid={passwordIsValid}
-						// onChange={passwordChangeHandler}
-						// onBlur={validatePasswordHandler}
+						value={passwordState.value}
+						isValid={passwordIsValid}
+						onChange={passwordChangeHandler}
+						onBlur={validatePasswordHandler}
 					/>
 					<button type="submit" 
-                    // disabled={!formIsValid}
+                    disabled={!formIsValid}
                     
                     >
 						Sign in
@@ -160,6 +159,6 @@ const Login = React.forwardRef((props, ref) => {
 			</Formik>
 		</div>
 	);
-});
+};
 
 export default Login;

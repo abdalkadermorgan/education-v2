@@ -17,6 +17,8 @@ import Login from './pages/Login';
 import logger from 'redux-logger'
 import CartPage from "./pages/CartPage";
 import SingleCourse from "./pages/SingleCourse";
+import React, { useContext } from "react";
+import AuthContext from "./store/auth-context";
 
 const store = configureStore({
   reducer: reducer,
@@ -31,6 +33,9 @@ const store = configureStore({
 });
 const persistor = persistStore(store);
 function App() {
+
+  const ctx = useContext(AuthContext);
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={<div></div>}>
@@ -44,7 +49,7 @@ function App() {
             />
             <Route
               path='/dashboard'
-              element={<DashboardApp />}
+              element={ctx.isLoggedIn && <DashboardApp />}
             />
             <Route
               path='/courses'
@@ -53,7 +58,7 @@ function App() {
 
             <Route
               path='/login'
-              element={<Login />}
+              element={!ctx.isLoggedIn && <Login />}
             />
 
             <Route
@@ -65,12 +70,11 @@ function App() {
               path='course/:id'
               element={<SingleCourse />}
             />
-
           </Routes>
           <Routes>
             <Route
               path='/dashboard/courses'
-              element={
+              element={ctx.isLoggedIn &&
                 <>
                   <Sidebar />
                   <CourseDataTable />
