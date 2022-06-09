@@ -14,7 +14,7 @@ import DashboardApp from './Dashboard/DashboardApp';
 import Courses from './pages/Courses';
 import HomePage from './pages/Home';
 import Login from './pages/Login';
-import logger from 'redux-logger'
+// import logger from 'redux-logger';
 import CartPage from "./pages/CartPage";
 import SingleCourse from "./pages/SingleCourse";
 import React, { useContext } from "react";
@@ -23,10 +23,13 @@ import AuthContext from "./store/auth-context";
 const store = configureStore({
   reducer: reducer,
 
-  middleware: getDefaultMiddleware => [...getDefaultMiddleware({
-    serializableCheck: false,
+  // middleware: getDefaultMiddleware => [...getDefaultMiddleware({
+  //   serializableCheck: false,
 
-  }), logger],
+  // }), logger],
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 
 
 
@@ -39,7 +42,6 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={<div></div>}>
-
         <BrowserRouter>
           <Navbar />
           <Routes>

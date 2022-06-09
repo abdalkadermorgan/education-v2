@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { Button, Modal, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,50 @@ const CourseDataTable = () => {
 	const [showDel, setShowDel] = useState(false);
 	const handleCloseDel = () => setShowDel(false);
 	const handleShowDel = () => setShowDel(true);
+
+	const [course, setCourse] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState(null);
+
+	const fetchCoursesHandler = useCallback(async () => {
+		setIsLoading(true);
+		setError(null);
+		try {
+			const response = await fetch('/api/admin/courses');
+			if (!response.ok) {
+				throw new Error ('wrong!')
+			}
+
+			const data = await response.json();
+
+			const loadedCourses = [];
+
+			for(const key in data) {
+				loadedCourses.push({
+					id: key,
+					title: data[key].title,
+					category: data[key].category,
+					price:data[key].price,
+					discount: data[key].discount,
+					description: data[key].description,
+				});
+			}
+			setCourse(loadedCourses);
+			
+		} catch (error) {
+			setError(error.message);
+		}
+		setIsLoading(false);
+	}, []);
+
+	useEffect(() => {
+		fetchCoursesHandler();
+	}, [fetchCoursesHandler]);
+
+
+
+
+
 
 	const { courses } = useSelector((state) => state);
 	const dispatch = useDispatch();
