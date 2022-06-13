@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { Actions } from '../../store/store';
-import { v4 as uuid } from "uuid";
-import { useDispatch, useSelector } from 'react-redux';
+// import { Actions } from '../../store/store';
+// import { v4 as uuid } from "uuid";
+// import { useDispatch, useSelector } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
 
 const CoursesAddModal = (props) => {
