@@ -7,147 +7,334 @@ import { Actions } from "../../../../store/store";
 import DeleteModal from "../../../modals/modal-del/DeleteModal";
 
 const CourseDataTable = () => {
-	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-	const [showDel, setShowDel] = useState(false);
-	const handleCloseDel = () => setShowDel(false);
-	const handleShowDel = () => setShowDel(true);
+  const [selectedCourse, setSelectedCourse] = useState([]);
 
-	const [courses, setCourses] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState(null);
+  const [showDel, setShowDel] = useState(false);
+  const handleCloseDel = () => setShowDel(false);
+  const handleShowDel = () => setShowDel(true);
 
-	const fetchCoursesHandler = useCallback(async () => {
-		setIsLoading(true);
-		setError(null);
-		try {
-			const response = await fetch('/api/admin/courses');
-			if (!response.ok) {
-				throw new Error('wrong!')
-			}
+  const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-			const res = await response.json();
+  const fetchCoursesHandler = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/admin/courses");
 
-			console.log(res.data.data);
+      if (!response.ok) {
+        throw new Error("wrong!");
+      }
 
-			const loadedCourses = res.data.data;
+      const res = await response.json();
 
-			console.log("load =>", loadedCourses);
-			setCourses(loadedCourses);
 
-		} catch (error) {
-			setError(error.message);
-		}
-		setIsLoading(false);
-	}, []);
+      const loadedCourses = res.data.data;
 
-	useEffect(() => {
-		fetchCoursesHandler();
-	}, [fetchCoursesHandler]);
+      setCourses(loadedCourses);
+    } catch (error) {
+      setError(error.message);
+    }
+    setIsLoading(false);
+  }, []);
 
-	async function addCourseHandler(course) {
-		const response = await fetch('/api/admin/courses', {
-			method: 'POST',
-			body: JSON.stringify(course),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-		const res = await response.json();
-		console.log("res => ", res);
+  useEffect(() => {
+    fetchCoursesHandler();
+  }, [fetchCoursesHandler]);
+
+  async function addCourseHandler(course) {
+    const response = await fetch("/api/admin/courses", {
+      method: "POST",
+      body: JSON.stringify(course),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await response.json();
+    if (res.status) {
+      fetchCoursesHandler();
+    } else {
+      alert(res.msg);
+    }
+    console.log("res => ", res);
+  }
+
+  let content = <div></div>;
+
+  if (courses.length > 0) {
+    content = "";
+  }
+
+  if (error) {
+    content = <p>{error}</p>;
+  }
+
+  if (isLoading) {
+    content = <p className="">Loading...</p>;
+  }
+
+  function DeleteModal(course) {
+    setSelectedCourse(course);
+    handleShowDel();
+  }
+  async function onDeleteCourse() {
+    console.log("coo", selectedCourse);
+    const response = await fetch("/api/admin/courses/" + selectedCourse.id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await response.json();
+    if (res.status) {
+      handleCloseDel();
+      fetchCoursesHandler();
+    } else {
+      handleClose();
+      alert(res.msg);
+    }
+  }
+
+  const onEdit = (course) => {
+    console.log("on edit coursee => ", course);
+    handleShow(true);
+    setSelectedCourse(course);
+  };
+
+  async function onEditcourse() {
+    // console.log("course1", course);
+    const response = await fetch("/api/admin/courses/" + selectedCourse.id, {
+      method: "PATCH",
+      body: JSON.stringify(selectedCourse),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("course2", selectedCourse);
+    const res = await response.json();
+
+    console.log("res", res);
+    if (res.status) {
+      handleClose();
+      fetchCoursesHandler();
+    } else {
+		handleClose();
+      alert(res.msg);
 	}
+    setSelectedCourse((s) => ({
+      title: "",
+      description: "",
+      price: "",
+      discount: "",
+      category: "",
+      image_id: "",
+    }));
 
-	let content = <div></div>;
+    // dispatch(
+    //   Actions.SetInfoGraphic(
+    //     infographics.map((info) => {
+    //       if (info.id === state.id) {
+    //         info = state;
+    //       }
+    //       return info;
+    //     })
+    //   )
+    // );
 
-	if (courses.length > 0) {
-		content = "";
-	}
+    // setState((s) => ({
+    //   students: "",
+    //   available: "",
+    //   products: "",
+    //   teachers: "",
+    //   id: "",
+    // }
+    // ));
+    // stopEditingHandler();
+  }
 
-	if (error) {
-		content = <p>{error}</p>;
-	}
+  return (
+    <div className="dashboard-content">
+      <div className="d-flex mb-3 justify-content-end">
+        <CoursesAddModal onAddCourse={addCourseHandler} />
+      </div>
+      {content}
+      <Table responsive hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Catigory</th>
+            <th>Price</th>
+            <th>Discounts</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {courses.map((course, index) => (
+            <tr key={`course-${index}`}>
+              <td>{index + 1}</td>
+              <td>
+                <img src={course.image_url} width={50} height={50} alt="" />
+              </td>
+              <td>{course.title}</td>
+              <td>{course.category}</td>
+              <td>{course.price}</td>
+              <td>{course.discount}</td>
+              <td>
+                <Button
+                  variant="link primary edit"
+                  onClick={() => onEdit(course)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="link danger del"
+                  onClick={() => DeleteModal(course)}
+                >
+                  Del
+                </Button>
+                {/* <DeleteModal /> */}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      {/* Delete Modal */}
+      <Modal show={showDel} onHide={handleCloseDel} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Course</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure to delete this Course?
+          {/* {course.id} */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDel}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={() => onDeleteCourse()}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-	if (isLoading) {
-		content = <p className="" >Loading...</p>;
-	}
+      {/* Edit Modal */}
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Course</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <Formik
+              onSubmit={async (values) => {
+                await new Promise((r) => setTimeout(r, 500));
+                alert(JSON.stringify(values, null, 2));
+              }}
+            >
+              <Form>
+                <Field
+                  id="courseTitle"
+                  name="cTitle"
+                  placeholder="Title"
+                  onChange={(e) =>
+                    setSelectedCourse((s) => ({
+                      ...s,
+                      title: e.target.value,
+                    }))
+                  }
+                  value={selectedCourse.title}
+                />
 
+                <Field
+                  id="category"
+                  name="category"
+                  placeholder="Category"
+                  onChange={(e) =>
+                    setSelectedCourse((s) => ({
+                      ...s,
+                      category: e.target.value,
+                    }))
+                  }
+                  value={selectedCourse.category}
+                />
 
-	async function onDeleteCourse(id) {
+                <Field
+                  id="price"
+                  name="price"
+                  placeholder="Price"
+                  type="number"
+                  onChange={(e) =>
+                    setSelectedCourse((s) => ({
+                      ...s,
+                      price: parseInt(e.target.value),
+                    }))
+                  }
+                  value={selectedCourse.price}
+                />
 
-		console.log("id => ", id);
-		return;
+                <Field
+                  id="discount"
+                  name="discount"
+                  placeholder="Discount"
+                  type="number"
+                  onChange={(e) =>
+                    setSelectedCourse((s) => ({
+                      ...s,
+                      discount: e.target.value,
+                    }))
+                  }
+                  value={selectedCourse.discount}
+                />
 
-		const response = await fetch('/api/admin/courses/' + id, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-		const res = await response.json();
-		console.log("res => ", res);
-	};
+                <Field
+                  as="textarea"
+                  id="discrption"
+                  name="discrption"
+                  placeholder="Discription"
+                  type="number"
+                  onChange={(e) =>
+                    setSelectedCourse((s) => ({
+                      ...s,
+                      description: e.target.value,
+                    }))
+                  }
+                  value={selectedCourse.description}
+                />
 
-
-
-
-	return (
-
-		<div className="dashboard-content">
-			<div className="d-flex mb-3 justify-content-end">
-				<CoursesAddModal onAddCourse={addCourseHandler} />
-			</div>
-			{content}
-			<Table responsive hover>
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Image</th>
-						<th>Title</th>
-						<th>Catigory</th>
-						<th>Price</th>
-						<th>Discounts</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{courses.map((course, index) => (
-						<tr key={`course-${index}`}>
-							<td>{index + 1}</td>
-							<td>
-								<img
-									src={course.image_url}
-									width={50}
-									height={50}
-									alt=""
-								/>
-							</td>
-							<td>{course.title}</td>
-							<td>{course.category}</td>
-							<td>{course.price}</td>
-							<td>{course.discount}</td>
-							<td>
-									<Button variant="link primary edit"
-									// onClick={() => onEdit(course)}
-									>
-										Edit
-									</Button>
-								<Button variant="link danger del"
-									onClick={handleShowDel}
-								>
-									Del
-								</Button>
-								<DeleteModal />
-							</td>
-						</tr>
-
-					))}
-				</tbody>
-			</Table>
-
-		</div>
-	);
-}
+                <Field
+                  id="img"
+                  name="img"
+                  placeholder="URL Image"
+                  type="text"
+                  onChange={(e) =>
+                    setSelectedCourse((s) => ({
+                      ...s,
+                      image_id: e.target.value,
+                    }))
+                  }
+                  value={selectedCourse.image_id}
+                />
+              </Form>
+            </Formik>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={() => onEditcourse()}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
+};
 
 export default CourseDataTable;
