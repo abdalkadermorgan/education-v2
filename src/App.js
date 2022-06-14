@@ -14,7 +14,6 @@ import DashboardApp from './Dashboard/DashboardApp';
 import Courses from './pages/Courses';
 import HomePage from './pages/Home';
 import Login from './pages/Login';
-// import logger from 'redux-logger';
 import CartPage from "./pages/CartPage";
 import SingleCourse from "./pages/SingleCourse";
 import React, { useContext } from "react";
