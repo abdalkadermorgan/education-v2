@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
 
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { images } from "../assets/images";
 import AuthContext from '../store/auth-context';
 import Input from '../components/UI/Input';

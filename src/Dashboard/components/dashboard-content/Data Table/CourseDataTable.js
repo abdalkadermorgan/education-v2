@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
-import { Button, Modal, Pagination, Table } from "react-bootstrap";
+import { Button, Modal, Table } from "react-bootstrap";
 import CoursesAddModal from "../../../modals/CoursesAddModal";
 
 const CourseDataTable = () => {
@@ -47,7 +47,7 @@ const CourseDataTable = () => {
   }, []);
 
   useEffect(() => {
-    fetchCoursesHandler(1);
+    fetchCoursesHandler();
   }, [fetchCoursesHandler]);
 
   async function addCourseHandler(course) {
@@ -308,16 +308,9 @@ const CourseDataTable = () => {
 
                 <Field
                   id="img"
-                  name="img"
+                  name="file"
                   placeholder="URL Image"
-                  type="text"
-                  onChange={(e) =>
-                    setSelectedCourse((s) => ({
-                      ...s,
-                      image_id: e.target.value,
-                    }))
-                  }
-                  value={selectedCourse.image_id}
+                  type="file"
                 />
               </Form>
             </Formik>

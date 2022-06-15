@@ -19,7 +19,7 @@ const SlideDataTable = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchCoursesHandler = useCallback(async () => {
+  const fetchSlidersHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -32,7 +32,7 @@ const SlideDataTable = () => {
       const res = await response.json();
 
       const loadedSliders = res.data.data;
-console.log("loaded=>", loadedSliders);
+      console.log("loaded=>", loadedSliders);
 
       setSliders(loadedSliders);
     } catch (error) {
@@ -42,8 +42,8 @@ console.log("loaded=>", loadedSliders);
   }, []);
 
   useEffect(() => {
-    fetchCoursesHandler(1);
-  }, [fetchCoursesHandler]);
+    fetchSlidersHandler();
+  }, [fetchSlidersHandler]);
 
   async function addSliderHandler(slides) {
     const response = await fetch("/api/admin/slides", {
@@ -56,7 +56,7 @@ console.log("loaded=>", loadedSliders);
     console.log("respon =>>", response);
     const res = await response.json();
     if (res.status) {
-      fetchCoursesHandler();
+      fetchSlidersHandler();
     } else {
       alert(res.msg);
     }
@@ -77,12 +77,65 @@ console.log("loaded=>", loadedSliders);
     content = <p className="">Loading...</p>;
   }
 
+  function DeleteModal(slide) {
+    setSelectedSlider(slide);
+    handleShowDel();
+  }
+  async function onDeleteSlide() {
+    console.log("coo", selectedSlider);
+    const response = await fetch("/api/admin/slides/" + selectedSlider.id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = await response.json();
+    if (res.status) {
+      handleCloseDel();
+      fetchSlidersHandler();
+    } else {
+      handleClose();
+      alert(res.msg);
+    }
+  }
+
+  const onEdit = (slide) => {
+    console.log("on edit slide => ", slide);
+    handleShow(true);
+    setSelectedSlider(slide);
+  };
+
+  async function onEditSlide() {
+    const response = await fetch("/api/admin/slides/" + selectedSlider.id, {
+      method: "PATCH",
+      body: JSON.stringify(selectedSlider),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("course2", selectedSlider);
+    const res = await response.json();
+
+    console.log("res", res);
+    if (res.status) {
+      handleClose();
+      fetchSlidersHandler();
+    } else {
+      handleClose();
+      alert(res.msg);
+    }
+    setSelectedSlider((s) => ({
+      title: "",
+      image_url: "",
+    }));
+  }
+
   return (
     <div className="dashboard-content">
       <div className="d-flex mb-3 justify-content-end">
         <SlideAddModal onAddSlide={addSliderHandler} />
       </div>
-	  {content}
+      {content}
       <Table responsive hover>
         <thead>
           <tr>
@@ -104,102 +157,99 @@ console.log("loaded=>", loadedSliders);
                 <>
                   <Button
                     variant="link primary edit"
-                    // onClick={() => onEdit(slide)}
+                  onClick={() => onEdit(slide)}
                   >
                     Edit
                   </Button>
 
-                  <Modal show={show} onHide={handleClose} animation={false}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Edit Slide</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div>
-                        <Formik
-                          initialValues={{
-                            slideTitle: "",
-                            img: "",
-                          }}
-                          onSubmit={async (values) => {
-                            await new Promise((r) => setTimeout(r, 500));
-                            alert(JSON.stringify(values, null, 2));
-                          }}
-                        >
-                          <Form>
-                            <Field
-                              id="slideTitle"
-                              name="slideTitle"
-                              placeholder="Title"
-                            //   onChange={(e) =>
-                            //     setState((s) => ({
-                            //       ...s,
-                            //       title: e.target.value,
-                            //     }))
-                            //   }
-                            //   value={state.title}
-                            />
-
-                            <Field
-                              id="img"
-                              name="img"
-                              placeholder="URL Image"
-                              type="text"
-                            //   onChange={(e) =>
-                            //     setState((s) => ({
-                            //       ...s,
-                            //       urlImg: e.target.value,
-                            //     }))
-                            //   }
-                            //   value={state.urlImg}
-                            />
-                          </Form>
-                        </Formik>
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
-                        Close
-                      </Button>
-                      <Button variant="primary" 
-					//   onClick={onEditslide}
-					  >
-                        Save Changes
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
                 </>
                 <>
-                  <Button variant="link danger del" onClick={handleShowDel}>
+                  <Button variant="link danger del" onClick={() => DeleteModal(slide)}>
                     Del
                   </Button>
 
-                  <Modal
-                    show={showDel}
-                    onHide={handleCloseDel}
-                    animation={false}
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title>Delete Slide</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Are you sure to delete this slide?</Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleCloseDel}>
-                        Close
-                      </Button>
-                      <Button
-                        variant="primary"
-                        // onClick={() => onDeleteSlide(slide.id)}
-                      >
-                        Save Changes
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
                 </>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
+      {/* Delete Modal */}
+      <Modal
+        show={showDel}
+        onHide={handleCloseDel}
+        animation={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Slide</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure to delete this slide?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDel}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => onDeleteSlide()}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Edit Modal */}
+
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Slide</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <Formik
+              initialValues={{
+                slideTitle: "",
+                img: "",
+              }}
+              onSubmit={async (values) => {
+                await new Promise((r) => setTimeout(r, 500));
+                alert(JSON.stringify(values, null, 2));
+              }}
+            >
+              <Form>
+                <Field
+                  id="slideTitle"
+                  name="slideTitle"
+                  placeholder="Title"
+                  onChange={(e) =>
+                    setSelectedSlider((s) => ({
+                      ...s,
+                      title: e.target.value,
+                    }))
+                  }
+                  value={selectedSlider.title}
+                />
+
+                <Field
+                  id="img"
+                  name="file"
+                  placeholder="URL Image"
+                  type="file"
+                />
+              </Form>
+            </Formik>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary"
+            onClick={() => onEditSlide()}
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

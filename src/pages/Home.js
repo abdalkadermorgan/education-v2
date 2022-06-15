@@ -11,9 +11,61 @@ import { UilGraduationCap } from '@iconscout/react-unicons';
 import { UilBook } from '@iconscout/react-unicons';
 import { UilFavorite } from '@iconscout/react-unicons';
 import { UilUsersAlt } from '@iconscout/react-unicons';
-import { useSelector } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
 const HomePage = () => {
-    const { sliders, infographics } = useSelector((state) => state);
+    const [sliders, setSliders] = useState([]);
+    const [totalCourse, setTotalCourse] = useState(0)
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+
+    const fetchCoursesHandler = useCallback(async () => {
+        try {
+            const response = await fetch(`/api/admin/courses`);
+            if (!response.ok) {
+                throw new Error("wrong!");
+            }
+            const res = await response.json();
+            const totalCourses = res.data.total;
+            setTotalCourse(totalCourses);
+            console.log("total", totalCourses);
+        } catch (error) {
+            setError(error.message);
+        }
+    }, []);
+
+    const fetchSlidersHandler = useCallback(async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await fetch(`/api/admin/slides`);
+            if (!response.ok) {
+                throw new Error("wrong!");
+            }
+            const res = await response.json();
+            const loadedSliders = res.data.data;
+            console.log("loaded=>", loadedSliders);
+
+            setSliders(loadedSliders);
+        } catch (error) {
+            setError(error.message);
+        }
+        setIsLoading(false);
+    }, []);
+
+    useEffect(() => {
+        fetchSlidersHandler();
+        fetchCoursesHandler();
+    }, [fetchSlidersHandler, fetchCoursesHandler]);
+
+    if (isLoading) {
+		return <p className="">Loading...</p>;
+	}
+
+
+	if (error) {
+		return <p>{error}</p>;
+	}
 
     return (
         <div>
@@ -27,7 +79,7 @@ const HomePage = () => {
             >
                 {sliders.map((slide, index) => (
                     <SwiperSlide className='swiper-slide' key={`slider-home-${index}`}>
-                        <img src={slide.urlImg}
+                        <img src={slide.image_url}
                             alt='' />
                     </SwiperSlide>
 
@@ -52,55 +104,55 @@ const HomePage = () => {
             <section className='page-section'>
                 <Container>
                     <div className='search-counter-up'>
-                        {infographics.map((info, index) => (
-                            <Row key={`infographic-homne-${index}`}>
-                                <div className='col-md-3 col-sm-6'>
-                                    <div className='counter-icon-number'>
-                                        <div className='counter-icon'>
-                                            <UilGraduationCap />
-                                        </div>
-                                        <div className='counter-number'>
-                                            <span className='counter-count'>{info.students}</span>
-                                            <p>Students Enrolled</p>
-                                        </div>
+                        {/* {infographics.map((info, index) => ( */}
+                        <Row>
+                            <div className='col-md-3 col-sm-6'>
+                                <div className='counter-icon-number'>
+                                    <div className='counter-icon'>
+                                        <UilGraduationCap />
+                                    </div>
+                                    <div className='counter-number'>
+                                        <span className='counter-count'>12</span>
+                                        <p>Students Enrolled</p>
                                     </div>
                                 </div>
-                                <div className='col-md-3 col-sm-6'>
-                                    <div className='counter-icon-number'>
-                                        <div className='counter-icon'>
-                                            <UilBook />
-                                        </div>
-                                        <div className='counter-number'>
-                                            <span className='counter-count'>{info.available}</span>
-                                            <p>Online Available Courses</p>
-                                        </div>
+                            </div>
+                            <div className='col-md-3 col-sm-6'>
+                                <div className='counter-icon-number'>
+                                    <div className='counter-icon'>
+                                        <UilBook />
+                                    </div>
+                                    <div className='counter-number'>
+                                        <span className='counter-count'>{totalCourse}</span>
+                                        <p>total Course</p>
                                     </div>
                                 </div>
-                                <div className='col-md-3 col-sm-6'>
-                                    <div className='counter-icon-number'>
-                                        <div className='counter-icon'>
-                                            <UilFavorite />
-                                        </div>
-                                        <div className='counter-number'>
-                                            <span className='counter-count'>{info.products}</span>
-                                            <p>Premium Quality Products</p>
-                                        </div>
+                            </div>
+                            <div className='col-md-3 col-sm-6'>
+                                <div className='counter-icon-number'>
+                                    <div className='counter-icon'>
+                                        <UilFavorite />
+                                    </div>
+                                    <div className='counter-number'>
+                                        <span className='counter-count'>100</span>
+                                        <p>Premium Quality Products</p>
                                     </div>
                                 </div>
-                                <div className='col-md-3 col-sm-6'>
-                                    <div className='counter-icon-number'>
-                                        <div className='counter-icon'>
-                                            <UilUsersAlt />
-                                        </div>
-                                        <div className='counter-number'>
-                                            <span className='counter-count'>{info.teachers}</span>
-                                            <p>Teachers Registered</p>
-                                        </div>
+                            </div>
+                            <div className='col-md-3 col-sm-6'>
+                                <div className='counter-icon-number'>
+                                    <div className='counter-icon'>
+                                        <UilUsersAlt />
+                                    </div>
+                                    <div className='counter-number'>
+                                        <span className='counter-count'>200</span>
+                                        <p>Teachers Registered</p>
                                     </div>
                                 </div>
-                            </Row>
+                            </div>
+                        </Row>
 
-                        ))}
+                        {/* ))} */}
                     </div>
                 </Container>
             </section>

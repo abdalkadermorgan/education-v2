@@ -42,11 +42,11 @@ const CartPage = () => {
 								<div className="col-6">
 									<div className="cart-details">
 										<div className="cart-img">
-											<img src={carts.urlImg} alt="" />
+											<img src={carts.image_url} alt="" />
 										</div>
 										<div className="cart-name">
 											<span className="name">{carts.title}</span>
-											<span className="catigory">{carts.catigory}</span>
+											<span className="catigory">{carts.category}</span>
 										</div>
 									</div>
 								</div>

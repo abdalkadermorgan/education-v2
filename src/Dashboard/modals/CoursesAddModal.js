@@ -1,9 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-// import { Actions } from '../../store/store';
-// import { v4 as uuid } from "uuid";
-// import { useDispatch, useSelector } from 'react-redux';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 
 const CoursesAddModal = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
