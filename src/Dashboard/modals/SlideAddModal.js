@@ -1,33 +1,51 @@
-import { Field, Form, Formik } from 'formik';
-import { v4 as uuid } from "uuid";
-import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../../store/store';
+import { Form, Formik } from "formik";
+import React, { useRef, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 
-function SlideAddModal() {
+function SlideAddModal(props) {
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [state, setState] = useState({
-    id:"",
-    title: "",
-    urlImg: "",
-  });
+  const titleRef = useRef("");
 
+  const submitHandler = (e) => {
+    e.preventDefault();
 
-  const { sliders } = useSelector((state) => state);
-
-  const dispatch = useDispatch();
-
-  const addNewSlide = () => {
-    dispatch(Actions.setSliders([...sliders, { ...state, id: uuid() }]));
+    const slide = {
+      title: titleRef.current.value,
+      image_id: selectedFile,
+    };
+    console.log("slide for =>", slide);
+    props.onAddSlide(slide);
     handleClose();
   };
 
+  const initialValues = { title: "", image_id: parseInt("") };
 
+  async function onFileChange(event) {
+    console.log("11111111111", event.target.files[0]);
+
+    let formData = new FormData();
+    formData.append("file", event.target.files[0]);
+
+    // Details of the uploaded file
+    console.log("2222222222", formData);
+
+    // send request
+    const response = await fetch("/api/file/upload", {
+      method: "POST",
+      body: formData,
+    });
+    const res = await response.json();
+    const imgId = res.data;
+    console.log("res imag => ", res);
+    console.log("res id => ", imgId);
+    setSelectedFile(imgId);
+  }
 
   return (
     <>
@@ -42,48 +60,42 @@ function SlideAddModal() {
         <Modal.Body>
           <div>
             <Formik
-              initialValues={{
-                slideTitle: '',
-                img: '',
-              }}
+              initialValues={initialValues}
               onSubmit={async (values) => {
                 await new Promise((r) => setTimeout(r, 500));
                 alert(JSON.stringify(values, null, 2));
               }}
             >
-              <Form>
-                <Field
+              <Form onSubmit={submitHandler}>
+                <input
                   id="slideTitle"
-                  name="slideTitle"
+                  name="sTitle"
                   placeholder="Title"
-                  onChange={(e) => setState((s) => ({ ...s, title: e.target.value }))}
-                  value={state.name}
+                  ref={titleRef}
                 />
 
-                <Field
+                <input
+                  onChange={onFileChange}
                   id="img"
-                  name="img"
-                  placeholder="URL Image"
-                  type="text"
-                  onChange={(e) => setState((s) => ({ ...s, urlImg: e.target.value }))}
-                  value={state.url}
+                  name="file"
+                  type="file"
+                  // ref={imgRef}
                 />
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" type="submit">
+                    Save Changes
+                  </Button>
+                </Modal.Footer>
               </Form>
             </Formik>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={addNewSlide}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
 }
-
 
 export default SlideAddModal;

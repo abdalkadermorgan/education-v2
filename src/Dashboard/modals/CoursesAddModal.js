@@ -17,7 +17,7 @@ const CoursesAddModal = (props) => {
   const priceRef = useRef('');
   const discountRef = useRef('');
   const descriptionRef = useRef('');
-  const imgRef = useRef('');
+  // const imgRef = useRef('');
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -28,10 +28,9 @@ const CoursesAddModal = (props) => {
       price: priceRef.current.value,
       discount: discountRef.current.value,
       description: descriptionRef.current.value,
-      // image_id: imgRef.target.files,
+      image_id: selectedFile,
     };
     console.log("course for =>", course);
-
     props.onAddCourse(course);
     handleClose();
   }
@@ -45,25 +44,12 @@ const CoursesAddModal = (props) => {
   async function onFileChange(event) {
 
     console.log("11111111111", event.target.files[0]);
-    // Update the state 
-    // setSelectedFile(event.target.files[0] ) 
 
     let formData = new FormData();
-
-    // Update the formData object 
-    // formData.append( 
-    //   "file", 
-    //   event.target.files[0],
-    //   event.target.files[0].name
-    // ); 
-
     formData.append('file', event.target.files[0]);
 
     // Details of the uploaded file 
     console.log("2222222222", formData);
-
-    // let obj = {file: event.target.files[0]};
-    // console.log(obj); 
 
     // send request
     const response = await fetch('/api/file/upload', {
@@ -74,36 +60,9 @@ const CoursesAddModal = (props) => {
     const res = await response.json();
     const imgId = res.data
     console.log("res imag => ", res);
+    console.log("res id => ", imgId);
+    setSelectedFile(imgId);
   };
-
-  // On file upload (click the upload button) 
-  // async function onFileUpload () { 
-  //   // Create an object of formData 
-  //   const formData = new FormData(); 
-
-  //   // Update the formData object 
-  //   formData.append( 
-  //     "myFile", 
-  //     selectedFile.selectedFile,
-  //   ); 
-
-  //   // Details of the uploaded file 
-  //   console.log(selectedFile.selectedFile); 
-
-  //   // send request
-  //   const response = await fetch('/api/file/upload', {
-  //     method: "POST",
-  //     body: JSON.stringify(formData),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   const res = await response.json();
-  //   const imgId = res.data
-  //   console.log("res imag => ", res);
-  //   console.log("res imag Id => ", imgId);
-
-  // }; 
 
   return (
     <>
@@ -170,7 +129,8 @@ const CoursesAddModal = (props) => {
                   id="img"
                   name="file"
                   type="file"
-                  ref={imgRef}
+                  // ref={imgRef}
+                  
                 />
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
